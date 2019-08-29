@@ -5,10 +5,16 @@
 # terminal emulator
 super + Return
 	alacritty
+# alternative
+XF86LaunchA
+	alacritty
 
 # program launcher
 super + {e,@space}
-      rofi -combi-modi window,run,ssh -show combi
+      rofi -show combi -combi-modi "window,run,ssh" -modi combi
+# Alternative launcher      
+XF86Explorer
+      rofi -show combi -combi-modi "window,run,ssh" -modi combi
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -22,6 +28,15 @@ super + x
 
 XF86MonBrightness{Up,Down}
         backlight {+,-}5%	
+
+XF86AudioMute
+	amixer -D pulse set Master 1+ toggle
+
+XF86AudioRaiseVolume
+	amixer -q sset Master 3%+
+
+XF86AudioLowerVolume
+	amixer -q sset Master 3%-
 
 #
 # bspwm hotkeys

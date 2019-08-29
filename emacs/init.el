@@ -33,12 +33,16 @@ There are two things you can do about this warning:
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
-(overwrite-mode 1)
+(overwrite-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 
 (keyboard-translate ?\C-h ?\C-?)
+
+(set-frame-font "Tamsyn 20" nil t)
+
+(pdf-tools-install)
 
 (setq auto-save-default nil)
 (custom-set-variables
@@ -77,47 +81,66 @@ There are two things you can do about this warning:
  helm-gtags-suggested-key-mapping t
  )
 
-(delete-selection-mode t)
-
-(require 'helm-gtags)
-;; Enable helm-gtags-mode
-(add-hook 'dired-mode-hook 'helm-gtags-mode)
-(add-hook 'eshell-mode-hook 'helm-gtags-mode)
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-
-
-(add-hook 'racer-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-
-(add-hook 'racer-mode-hook #'company-mode)
-
-(require 'rust-mode)
-;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-;; (setq company-tooltip-align-annotations t)
-
-
-(racer-mode 1)
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(setq tab-always-indent 'complete)
+(require 'meghanada)
+(add-hook 'java-mode-hook
+          (lambda ()
+            ;; meghanada-mode on
+            (meghanada-mode t)
+            ;; enable telemetry
+            (meghanada-telemetry-enable t)
+            (flycheck-mode +1)
+            (setq c-basic-offset 2)
+            ;; use code format
+            (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+(cond
+   ((eq system-type 'windows-nt)
+    (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
+    (setq meghanada-maven-path "mvn.cmd"))
+   (t
+    (setq meghanada-java-path "java")
 
-(defun do-indent ()
-  "Insert 4 spaces"
-  (interactive)
-  (insert "    "))
+;;(global-set-key (kbd "TAB") 'do-indent)
 
-(global-set-key (kbd "TAB") 'do-indent)
+;; (setq max-lisp-eval-depth 10000)
 
 (defun switch-to-previous-buffer()
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
+
 (global-set-key (kbd "M-o") #'switch-to-previous-buffer)
+
+
+(delete-selection-mode t)
+
+;;(require 'helm-gtags)
+;; Enable helm-gtags-mode
+;; (add-hook 'dired-mode-hook 'helm-gtags-mode)
+;; (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+;; (add-hook 'c-mode-hook 'helm-gtags-mode)
+;; (add-hook 'c++-mode-hook 'helm-gtags-mode)
+;; (add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+
+;; (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+;; (define-key helm-gtags-mode (kbd "C-j") 'helm-gtags-select
+;; (define-key helm-gtags-mode (kbd "M-.") 'helm-gtags-dwim)
+;; (define-key helm-gtags-mode (kbd "M-,") 'helm-gtags-pop-stack)
+;; (define-key helm-gtags-mode (kbd "C-c <") 'helm-gtags-previous-history)
+;; (define-key helm-gtags-mode (kbd "C-c >") 'helm-gtags-next-history)
+
+
+(add-hook 'racer-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(racer-mode 1)
+
+;; setq tab-always-indent 'complete)
+
+;; (defun do-indent ()
+;;   "Insert 4 spaces"
+;;   (interactive)
+;;   (insert "    "))
+

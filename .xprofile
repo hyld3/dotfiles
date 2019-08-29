@@ -5,7 +5,7 @@ PANEL_FONT="-*-tamsyn-*-*-*-*-20-*-*-*-*-*-*-*"
 PANEL_WM_NAME=bspwm_panel
 export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 export PATH=$PATH":/home/alex/.cargo/:/home/alex/.config/panel:/home/alex/ida-7.2:/home/alex/.local/bin/"
-feh --bg-scale /home/alex/Pictures/ChildrenOfGod.jpg
+feh --bg-scale /home/alex/Pictures/72ccad.png
 xsetroot -cursor_name left_ptr
 xset +fp /home/alex/.fonts
 wmname LG3D

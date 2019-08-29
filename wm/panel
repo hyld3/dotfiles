@@ -10,6 +10,8 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
+# COLOR_TITLE_FG="#4F94CD" old title color.
+
 xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
 clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &

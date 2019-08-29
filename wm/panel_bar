@@ -115,9 +115,11 @@ while read -r line ; do
 			;;
 	esac
 
-	bat=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}$(battery -f'Battery: %s %i')%{B-}%{F-} "
+	bat=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}$(battery -f'battery: %s %i')%{B-}%{F-} "
         essid=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}wlp4s0: $(essid -w wlp4s0)%{B-}%{F-} "
-        tun=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}vpn: $(mullvad status 2>1 | head -n1 | awk '{print $3}')%{B-}%{F-} "
+	curvol=$(amixer sget Master | rg '[.*%]' | head -n1)
+	vol=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}vol: $(echo $curvol | awk -F '[][]' '{print $2}')%%{B-}%{F-} "
+        #tun=" %{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG}vpn: $(mullvad status 2>1 | head -n1 | awk '{print $3}')%{B-}%{F-} "
 
-	printf "%s\n" "%{l}${wm}%{c}${title}%{r}$(tun)|${essid}|${bat}|${sys}"
+	printf "%s\n" "%{l}${wm}%{c}${title}%{r}${vol}|${essid}|${bat}|${sys}"
 done

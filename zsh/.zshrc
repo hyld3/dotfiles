@@ -96,12 +96,42 @@ alias zshconfig="emacs -nw ~/.zshrc"
 alias ohmyzsh="emacs -nw ~/.oh-my-zsh"
 
 alias fd="fdfind"
-
+#alias less=""
+alias cat="bat"
+#alias 
 export BAT_THEME="1337"
 export PATH=$PATH":/home/alex/.cargo/bin/:/home/alex/.config/panel:/home/alex/ida-7.2:/home/alex/.local/bin/:/usr/sbin/"
 
-(cat ~/.cache/wal/sequences &)
+function extract() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: $FUNCNAME filename"
+    fi
+   
+    filename=$1
+    if [ -f $filename ]; then
+        case $filename in
+            *.tar.xz)   tar xvfJ "$filename"                          ;;
+            *.tar.gz)   tar --gzip -xvf "$filename"                   ;;
+            *.tar.bz2)  tar --bzip2 -xvf "$filename"                  ;;
+            *.tar)      tar -xvf "$filename"                          ;;
+            *.tgz)      tar --gzip -xvf "$filename"                   ;;
+            *.tbz2)     tar --bzip2 -xvf "$filename"                  ;;
+            *.bz2)      bunzip2 "$filename"                           ;;
+            *.7z)       7za x "$filename"                             ;;
+            *.Z)        uncompress --keep "$filename"                 ;;
+            *.zip)      unzip $filename -d "${filename%.*}"           ;;
+            *.rar)      unrar x "$filename"                           ;;
+            *.jar)      jar xf "$filename"                            ;;
+            *)          echo "'$filename' not supported extension"    ;;
+        esac
+    else
+        echo "'$filename' is not a file."
+    fi
+}
+
+(/usr/bin/cat ~/.cache/wal/sequences &)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 wmname LG3D
+#mc
