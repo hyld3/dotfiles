@@ -18,8 +18,6 @@ There are two things you can do about this warning:
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
-
-
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/")t)
 
@@ -37,6 +35,19 @@ There are two things you can do about this warning:
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
+(delete-selection-mode 1)
+;; (electric-indent-mode -1)
+
+
+;; Customize doom-modeline with M-x customize-group RET doom-modeline RET
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+
+(require 'highlight-symbol)
+(global-set-key [(control f3)] 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
 
 (keyboard-translate ?\C-h ?\C-?)
 
@@ -50,15 +61,20 @@ There are two things you can do about this warning:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(doom-modeline-bar-width 6)
+ '(doom-modeline-height 25)
+ '(minimap-width-fraction 0.05)
+ '(minimap-window-location (quote right))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell magit company racer rust-mode helm-cider helm-gtags helm cyberpunk-theme))))
+    (flycheck-haskell haskell-mode zoom highlight-symbol doom-modeline exec-path-from-shell magit company racer rust-mode helm-cider helm-gtags helm cyberpunk-theme)))
+ '(zoom-mode t nil (zoom)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(highlight-thing ((t (:inherit (quote hi-pink))))))
 
 (load-theme 'cyberpunk t)
 
@@ -83,6 +99,14 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(global-flycheck-mode 1)
+;; (minimap-mode 1)
+
+
+
+;; (require 'highlight-thing)
+;; (global-highlight-thing-mode)
+
 (require 'meghanada)
 (add-hook 'java-mode-hook
           (lambda ()
@@ -94,24 +118,18 @@ There are two things you can do about this warning:
             (setq c-basic-offset 2)
             ;; use code format
             (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
-(cond
-   ((eq system-type 'windows-nt)
-    (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
-    (setq meghanada-maven-path "mvn.cmd"))
-   (t
-    (setq meghanada-java-path "java")
+(setq meghanada-java-path "java")
 
-;;(global-set-key (kbd "TAB") 'do-indent)
+;; (global-set-key (kbd "TAB") 'do-indent)
 
-;; (setq max-lisp-eval-depth 10000)
+(setq max-lisp-eval-depth 10000)
 
 (defun switch-to-previous-buffer()
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+      (switch-to-buffer (other-buffer (current-buffer) 1)))
+    (global-set-key (kbd "M-o") #'switch-to-previous-buffer)
 
-(global-set-key (kbd "M-o") #'switch-to-previous-buffer)
-
-
+(global-set-key (kbd "M-o") 'mode-line-other-buffer)
 (delete-selection-mode t)
 
 ;;(require 'helm-gtags)
@@ -130,17 +148,16 @@ There are two things you can do about this warning:
 ;; (define-key helm-gtags-mode (kbd "C-c <") 'helm-gtags-previous-history)
 ;; (define-key helm-gtags-mode (kbd "C-c >") 'helm-gtags-next-history)
 
-
-(add-hook 'racer-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-
-(racer-mode 1)
+;; Rust shilling
+;; (add-hook 'racer-mode-hook #'racer-mode)
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+;; (add-hook 'racer-mode-hook #'company-mode)
+;; (racer-mode 1)
 
 ;; setq tab-always-indent 'complete)
-
-;; (defun do-indent ()
-;;   "Insert 4 spaces"
-;;   (interactive)
-;;   (insert "    "))
+           
+(defun do-indent ()
+  "Insert 4 spaces"
+  (interactive)
+  (insert "    ")    )
 

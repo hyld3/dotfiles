@@ -4,10 +4,11 @@
 
 # terminal emulator
 super + Return
-	alacritty
+	gnome-terminal
 # alternative
-XF86LaunchA
-	alacritty
+
+#super + XF86LaunchA + {1,2}
+#	setxkbmap {us,dk}
 
 # program launcher
 super + {e,@space}
