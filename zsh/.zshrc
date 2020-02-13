@@ -8,7 +8,8 @@
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="aphrodite"
+#ZSH_THEME="aphrodite"
+ZSH_THEME="cypher"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -98,6 +99,9 @@ alias ohmyzsh="emacs -nw ~/.oh-my-zsh"
 alias fd="fdfind"
 #alias less=""
 alias cat="bat"
+alias renew_wlan="sudo dhclient -r wlp4s0 && sudo dhclient wlp4s0"
+alias pyslim="docker run --rm -it --name lulz slim/python:3.7 \"/bin/bash\""
+
 #alias 
 export BAT_THEME="1337"
 export PATH=$PATH":/home/alex/.cargo/bin/:/home/alex/.config/panel:/home/alex/ida-7.2:/home/alex/.local/bin/:/usr/sbin/"
@@ -135,3 +139,4 @@ function extract() {
 
 wmname LG3D
 #mc
+#alias pikk="for i in `seq 3`; do clear && toilet --gay $i && sleep 1 && clear ; done && toilet --gay pikk"

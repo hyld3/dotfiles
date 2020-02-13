@@ -12,10 +12,10 @@ super + Return
 
 # program launcher
 super + {e,@space}
-      rofi -show combi -combi-modi "window,run,ssh" -modi combi
+      rofi -show combi -combi-modi "window,run,ssh" -modi
 # Alternative launcher      
 XF86Explorer
-      rofi -show combi -combi-modi "window,run,ssh" -modi combi
+      rofi -show combi -combi-modi "window,run,ssh" -modi
 
 # make sxhkd reload its configuration files:
 super + Escape
